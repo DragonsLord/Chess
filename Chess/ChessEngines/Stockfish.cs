@@ -26,7 +26,6 @@ namespace Chess.Engines
             processStartInfo.RedirectStandardOutput = true;
             stockfish_process = new Process();
             stockfish_process.StartInfo = processStartInfo;
-            
         }
 
         public void Run()
@@ -43,13 +42,23 @@ namespace Chess.Engines
 
         public string FindBestMove(string board)
         {
-            inputWriter.WriteLine("position fen " + board);
-            inputWriter.WriteLine("go");
-            string best_move = outputReader.ReadLine();
-            while (best_move[0] != 'b')
-                best_move = outputReader.ReadLine();
-            string[] words = best_move.Split();
-            return words[1];
+            if (processStarted)
+            {
+                inputWriter.WriteLine("position fen " + board);
+                inputWriter.WriteLine("go");
+                string best_move = outputReader.ReadLine();
+                while (best_move[0] != 'b')
+                    best_move = outputReader.ReadLine();
+                string[] words = best_move.Split();
+                return words[1];
+            }
+            else return null;
+        }
+
+        public void End()
+        {
+            stockfish_process.Kill();
+            processStarted = false;
         }
 
         public static string GetFigureCharMark(Figure f)

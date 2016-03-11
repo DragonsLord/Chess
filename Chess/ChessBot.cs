@@ -312,5 +312,11 @@ namespace Chess
                 CurrentSituation[best_move[0], (int)best_move[1] - 49].ChessFigure.Move(CurrentSituation[best_move[2], (int)best_move[3] - 49].Position);
             }
         }
+
+        public void EndProcess()
+        {
+            if (FileManager.options["ChessEngine"] == "StockFish")
+                bot.End();
+        }
     }
 }

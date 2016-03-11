@@ -371,7 +371,7 @@ namespace Chess
                 player2 = new Player(FigureColor.Black, ref BlackKing);
                 player2.Name = "Player 2";
             }
-///!!!      //else
+            //else
             {
                 computer = new ChessBot(FigureColor.Black, ref board);
             }
@@ -394,8 +394,7 @@ namespace Chess
             SaveForm save = new SaveForm();
             save.StartPosition = Program.MainWindow.StartPosition;
             //save.TopMost = true;
-            save.ShowDialog();
-            
+            save.ShowDialog();  
         }
 
         public void EndGame()
@@ -404,11 +403,12 @@ namespace Chess
             info_panel.ClearData();
             player1 = null;
             player2 = null;
+            computer.EndProcess();
             game_session = false;
             //MessageBox.Show(System.GC.GetTotalMemory(false).ToString());
             // Forced call of Garbage Collector to delete figures and cells from memmory
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             //MessageBox.Show(System.GC.GetTotalMemory(true).ToString());
         }
     }
